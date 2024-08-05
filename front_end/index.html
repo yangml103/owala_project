@@ -23,10 +23,21 @@
                 }
                 const data = await response.json();
                 console.log('Fetched data:', data); // Debugging statement
+
+                if (typeof data !== 'object' || data === null) {
+                    throw new Error('Fetched data is not an object');
+                }
+
+                const colors = Object.keys(data).map(color => color.split(',').map(Number));
+                colors.forEach((color, index) => {
+                    // Process each color and its associated products
+                    console.log(`Color: ${color}`, data[Object.keys(data)[index]]);
+                });
+
                 const dropdown = document.getElementById('colorDropdown');
 
                 // Group colors by similarity
-                const groupedColors = groupColorsBySimilarity(data);
+                const groupedColors = groupColorsBySimilarity(colors);
 
                 // Populate the dropdown with grouped colors
                 for (const group of groupedColors) {
