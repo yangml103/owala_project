@@ -1,0 +1,44 @@
+
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Gallery Container</title>
+                </head>
+                <body>
+                    <div class="galleryContainer" style="font-family: 'Raleway'">
+      <div class="dropdown">
+    <label for="collectionFilter">Filter by Collection:</label>
+    <select id="collectionFilter">
+      <option value="all">All</option>
+      <option value="Amazon">Amazon</option>
+      <option value="Birthday Bash">Birthday Bash</option>
+      <option value="Color Drop">Color Drop</option>
+      <option value="Color of the Season">Color of the Season</option>
+      <option value="Cosmic Collection">Cosmic Collection</option>
+      <option value="Dick's Sporting Goods">Dick's Sporting Goods</option>
+      <option value="Friends Collection">Friends Collection</option>
+      <option value="HP Collection">HP Collection</option>
+      <option value="Marvel Collection">Marvel Collection</option>
+      <option value="Owala">Owala</option>
+      <option value="REI">REI</option>
+      <option value="San Diego Zoo Collection">San Diego Zoo Collection</option>
+      <option value="Sam's Club">Sam's Club</option>
+      <option value="Star Wars Collection">Star Wars Collection</option>
+      <option value="Target">Target</option>
+      <option value="Urban Outfitters">Urban Outfitters</option>
+      <option value="Walmart">Walmart</option>
+      <option value="Whole Foods">Whole Foods</option>
+      <option value="Winter Collection">Winter Collection</option>
+        <!-- Add other Collection options as needed -->
+    </select>
+</div>
+        <div id="gallery" style="display:none;">
+            <object style="height: 300px; width: 110px;" id="external-gallery-svg" data="img/svg/Outsidefrankenbottle2.svg" type="image/svg+xml"></object>
+        </div>
+        <div id="svgContainer" style="display: flex; flex-wrap: wrap;"></div>
+    </div>
+                </body>
+                </html>
+            
