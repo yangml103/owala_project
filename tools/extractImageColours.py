@@ -7,7 +7,7 @@ from colorthief import ColorThief
 # owala_products.json file and gets the color for each image
 
 # Load the JSON file
-with open('owala_products.json', 'r') as file:
+with open('../owala_products.json', 'r') as file:
     data = json.load(file)
     products = data.get('products', [])
 
