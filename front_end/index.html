@@ -13,105 +13,21 @@
     <div id="colorImageContainer"></div> <!-- Container for the color image -->
 
     <script>
-        // Function to fetch the JSON data and populate the dropdown
         async function populateDropdown() {
             try {
-                const response = await fetch('unique_dominant_colors.json'); // Ensure this path is correct
-                console.log('Fetching data...'); // Debugging statement
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                console.log('Fetched data:', data); // Debugging statement
-
-                if (typeof data !== 'object' || data === null) {
-                    throw new Error('Fetched data is not an object');
-                }
-
-                const colors = Object.keys(data).map(color => color.split(',').map(Number));
-                colors.forEach((color, index) => {
-                    // Process each color and its associated products
-                    console.log(`Color: ${color}`, data[Object.keys(data)[index]]);
-                });
+                const response = await fetch('grouped_colors.json');
+                const colors = await response.json();
 
                 const dropdown = document.getElementById('colorDropdown');
-
-                // Group colors by similarity
-                const groupedColors = groupColorsBySimilarity(colors);
-
-                // Populate the dropdown with grouped colors
-                for (const group of groupedColors) {
-                    const optgroup = document.createElement('optgroup');
-                    optgroup.label = `Group ${groupedColors.indexOf(group) + 1}`;
-                    group.forEach(color => {
-                        const option = document.createElement('option');
-                        const colorString = `rgb(${color.join(',')})`;
-                        option.value = colorString;
-                        option.textContent = colorString;
-                        option.style.backgroundColor = colorString;
-                        option.style.color = getContrastingColor(color);
-                        optgroup.appendChild(option);
-                    });
-                    dropdown.appendChild(optgroup);
-                }
-
-                // Add event listener to show color image on selection
-                dropdown.addEventListener('change', showColorImage);
+                Object.keys(colors).forEach(color => {
+                    const option = document.createElement('option');
+                    option.value = color;
+                    option.textContent = color;
+                    option.style.backgroundColor = `rgb${color}`;
+                    dropdown.appendChild(option);
+                });
             } catch (error) {
-                console.error('Error fetching the JSON data:', error);
-            }
-        }
-
-        // Function to group colors by similarity
-        function groupColorsBySimilarity(colors) {
-            const groups = [];
-            const threshold = 50; // Adjust this value to change grouping sensitivity
-
-            colors.forEach(color => {
-                let added = false;
-                for (const group of groups) {
-                    if (isSimilarColor(group[0], color, threshold)) {
-                        group.push(color);
-                        added = true;
-                        break;
-                    }
-                }
-                if (!added) {
-                    groups.push([color]);
-                }
-            });
-
-            return groups;
-        }
-
-        // Function to check if two colors are similar
-        function isSimilarColor(color1, color2, threshold) {
-            const distance = Math.sqrt(
-                Math.pow(color1[0] - color2[0], 2) +
-                Math.pow(color1[1] - color2[1], 2) +
-                Math.pow(color1[2] - color2[2], 2)
-            );
-            return distance < threshold;
-        }
-
-        // Function to get a contrasting color for text
-        function getContrastingColor(rgb) {
-            const [r, g, b] = rgb;
-            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-            return brightness > 125 ? 'black' : 'white';
-        }
-
-        // Function to show the color image
-        function showColorImage(event) {
-            const color = event.target.value;
-            const colorImageContainer = document.getElementById('colorImageContainer');
-            colorImageContainer.innerHTML = ''; // Clear previous image
-
-            if (color) {
-                const img = document.createElement('img');
-                img.src = `path_to_images/${color}.png`; // Ensure this path is correct
-                img.alt = `Image of ${color}`;
-                colorImageContainer.appendChild(img);
+                console.error('Error fetching or parsing JSON:', error);
             }
         }
 
